@@ -1,8 +1,5 @@
-FROM golang:1.21 as builder
-WORKDIR /app
-COPY . .
-RUN go mod tidy && go build -o service ./cmd/service
-
-FROM gcr.io/distroless/base
-COPY --from=builder /app/service /service
-ENTRYPOINT ["/service"]
+# Stage 1: dummy storage
+FROM alpine:latest
+WORKDIR /storage
+RUN echo "Dummy Storage Service for PolyCloud" > README.txt
+CMD ["sh", "-c", "echo Storage image running; sleep infinity"]
